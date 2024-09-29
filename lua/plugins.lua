@@ -40,8 +40,21 @@ require('packer').startup(function(use)
     requires = { 'nvim-tree/nvim-web-devicons' },
   })
 
-  -- Treesitter for better syntax highlighting
-  use('nvim-treesitter/nvim-treesitter')
+	-- Treesitter for better syntax highlighting and code understanding
+	use({
+		'nvim-treesitter/nvim-treesitter',
+		run = ':TSUpdate',
+		config = function()
+			require('nvim-treesitter.configs').setup({
+				ensure_installed = { 'go', 'lua', 'rust', 'typescript', 'javascript', 'html', 'css' },
+				highlight = {
+					enable = true,
+					additional_vim_regex_highlighting = false,
+				},
+				-- Additional configurations can go here
+			})
+		end,
+	})
 
   -- Color schemes
   use('navarasu/onedark.nvim')
@@ -168,6 +181,29 @@ require('packer').startup(function(use)
 	-- friendly-snippets for a collection of snippets
 	use('rafamadriz/friendly-snippets')
 
+	-- Go development plugin
+	use({
+		'ray-x/go.nvim',
+		config = function()
+			require('go').setup()
+		end,
+		ft = { 'go', 'gomod' },
+	})
 
+  use{ "nvim-neotest/nvim-nio" }
+	-- nvim-dap for debugging
+	use('mfussenegger/nvim-dap')
+
+	-- nvim-dap-ui for a better debugging UI
+	use({
+		'rcarriga/nvim-dap-ui',
+		requires = { 'mfussenegger/nvim-dap' },
+		config = function()
+			require('dapui').setup()
+		end,
+	})
+
+	-- Install delve for debugging Go code
+	use('leoluz/nvim-dap-go')
 end)
 

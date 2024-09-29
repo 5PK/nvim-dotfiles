@@ -7,3 +7,4 @@ require('lua/autocmds')
 
 --other stuff
 require('lua/other/dashboard')
+require('lua/other/dap')

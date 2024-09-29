@@ -46,6 +46,43 @@ local capabilities = require('cmp_nvim_lsp').default_capabilities()
 -- Language server configurations
 local lspconfig = require('lspconfig')
 
+-- Go language server setup
+require('lspconfig').gopls.setup({
+  capabilities = capabilities,
+  on_attach = function(client, bufnr)
+    -- Custom on_attach function for Go
+    local opts = { noremap = true, silent = true, buffer = bufnr }
+    -- LSP mappings
+    vim.keymap.set('n', 'gd', vim.lsp.buf.definition, opts)
+    vim.keymap.set('n', 'K', vim.lsp.buf.hover, opts)
+    vim.keymap.set('n', 'gr', vim.lsp.buf.references, opts)
+    vim.keymap.set('n', '<leader>rn', vim.lsp.buf.rename, opts)
+    vim.keymap.set('n', '<leader>ca', vim.lsp.buf.code_action, opts)
+    -- Formatting on save
+    if client.server_capabilities.documentFormattingProvider then
+      vim.api.nvim_create_autocmd('BufWritePre', {
+        group = vim.api.nvim_create_augroup('GoFormat', { clear = true }),
+        buffer = bufnr,
+        callback = function()
+          vim.lsp.buf.format({ async = false })
+        end,
+      })
+    end
+  end,
+  settings = {
+    gopls = {
+      analyses = {
+        unusedparams = true,
+        nilness = true,
+        unusedwrite = true,
+        fieldalignment = true,
+      },
+      staticcheck = true,
+    },
+  },
+})
+
+
 -- TypeScript
 lspconfig.ts_ls.setup({
   capabilities = capabilities,
