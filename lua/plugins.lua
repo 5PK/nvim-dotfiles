@@ -69,6 +69,9 @@ require('packer').startup(function(use)
   use('sindrets/diffview.nvim')
   use('tpope/vim-fugitive')
 
+  -- Spectre for find and replace
+  use 'nvim-pack/nvim-spectre'
+
   -- Indentation detection
   use({
     'nmac427/guess-indent.nvim',

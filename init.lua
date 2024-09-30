@@ -1,10 +1,10 @@
 -- init.lua
-require('lua/plugins')
-require('lua/settings')
-require('lua/keymaps')
-require('lua/lsp')
-require('lua/autocmds')
+require('plugins')
+require('settings')
+require('keymaps')
+require('lsp')
+require('autocmds')
 
 --other stuff
-require('lua/other/dashboard')
-require('lua/other/dap')
+require('dashboard')
+require('dap')
