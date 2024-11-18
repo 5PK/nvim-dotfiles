@@ -30,15 +30,10 @@ vim.cmd([[
 ]])
 
 -- Initialize packer.nvim
-require('packer').startup(function(use)
+require('packer').startup(function()
   -- Packer can manage itself
   use('wbthomason/packer.nvim')
 
-  -- Dashboard plugin for Neovim
-  use({
-    'glepnir/dashboard-nvim',
-    requires = { 'nvim-tree/nvim-web-devicons' },
-  })
 
 	-- Treesitter for better syntax highlighting and code understanding
 	use({
@@ -46,7 +41,7 @@ require('packer').startup(function(use)
 		run = ':TSUpdate',
 		config = function()
 			require('nvim-treesitter.configs').setup({
-				ensure_installed = { 'go', 'lua', 'rust', 'typescript', 'javascript', 'html', 'css' },
+				ensure_installed = {'c_sharp', 'go', 'lua', 'rust', 'typescript', 'javascript', 'html', 'css' },
 				highlight = {
 					enable = true,
 					additional_vim_regex_highlighting = false,
@@ -60,6 +55,7 @@ require('packer').startup(function(use)
   use('navarasu/onedark.nvim')
   use({ 'catppuccin/nvim', as = 'catppuccin' })
   use('xero/miasma.nvim')
+  use 'sainnhe/gruvbox-material'
 
   -- Git integration
   use({
@@ -149,7 +145,6 @@ require('packer').startup(function(use)
   })
 
   -- Additional plugin configurations can go here
-
   -- Harpoon setup
   require('harpoon').setup()
 
@@ -164,14 +159,6 @@ require('packer').startup(function(use)
 
   -- Gitsigns setup
   require('gitsigns').setup()
-
-	-- Comment.nvim for easy commenting
-	use({
-		'numToStr/Comment.nvim',
-		config = function()
-			require('Comment').setup()
-		end,
-	})
 
 	-- nvim-autopairs for automatic closing of pairs
 	use({

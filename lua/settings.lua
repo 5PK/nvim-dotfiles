@@ -26,3 +26,23 @@ vim.api.nvim_set_hl(0, 'CursorLineNr', { fg = '#9E9E9E', bold = true })
 vim.g.loaded_netrw = 1
 vim.g.loaded_netrwPlugin = 1
 
+vim.opt.tabline = "%!v:lua.MyTabline()"
+
+function MyTabline()
+    local s = ""
+    for i = 1, vim.fn.tabpagenr('$') do
+        local winnr = vim.fn.tabpagewinnr(i)
+        local buflist = vim.fn.tabpagebuflist(i)
+        local bufnr = buflist[winnr]
+        local filename = vim.fn.fnamemodify(vim.fn.bufname(bufnr), ":t")
+        if i == vim.fn.tabpagenr() then
+            s = s .. "%#TabLineSel# " .. filename .. " %#TabLine#"
+        else
+            s = s .. "%#TabLine# " .. filename .. " "
+        end
+    end
+    return s
+end
+
+
+

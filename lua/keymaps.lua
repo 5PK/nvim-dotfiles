@@ -11,6 +11,9 @@ vim.keymap.set("n", "<leader>2", function() harpoon:list():select(2) end)
 vim.keymap.set("n", "<leader>3", function() harpoon:list():select(3) end)
 vim.keymap.set("n", "<leader>4", function() harpoon:list():select(4) end)
 
+vim.keymap.set("n", "<leader>-", vim.diagnostic.open_float, { noremap = true, silent = true })
+
+
 -- Toggle previous & next buffers stored within Harpoon list
 vim.keymap.set("n", "<leader>[", function() harpoon:list():prev() end,{ noremap = true, silent = true } )
 vim.keymap.set("n", "<leader>]", function() harpoon:list():next() end,{ noremap = true, silent = true })
@@ -21,13 +24,16 @@ vim.api.nvim_set_keymap('n', '<leader>dvc', ':DiffviewClose<CR>', { noremap = tr
 
 -- Telescope key mappings
 vim.keymap.set('n', '<leader>pf', function()
-  require('telescope.builtin').find_files({
+  require('telescope.builtin').find_files(require('telescope.themes').get_dropdown({
     no_ignore = true,
     hidden = true,
-  })
+    previewer = false}))
 end, { noremap = true, silent = true })
 
-vim.keymap.set('n', '<leader>ff', ':Telescope git_files<CR>', { noremap = true, silent = true })
+vim.keymap.set('n', '<leader>ff', function()
+  require('telescope.builtin').git_files(require('telescope.themes').get_dropdown({previewer = false}))
+end, { noremap = true, silent = true })
+
 vim.api.nvim_set_keymap('n', '<leader>lg', ':Telescope live_grep<CR>', { noremap = true, silent = true })
 
 -- LSP key mappings
